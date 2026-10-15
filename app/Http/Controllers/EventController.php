@@ -12,16 +12,18 @@ class EventController extends Controller
      * Display a listing of the resource. (Katalog Publik & Admin Index)
      */
     public function index(Request $request)
-    {
-        // Fitur filter kategori opsional sesuai modul
-        $query = Event::query();
-        if ($request->has('category') && $request->category != '') {
-            $query->where('category', $request->category);
-        }
-        $events = $query->latest()->get();
+{
+    $query = Event::query();
 
-        return view('events.index', compact('events'));
+    // Filter berdasarkan kategori jika ada request 'category'
+    if ($request->has('category') && $request->category != '') {
+        $query->where('category', $request->category);
     }
+
+    $events = $query->latest()->get();
+
+    return view('events.index', compact('events'));
+}
 
     /**
      * Show the form for creating a new resource. (Form Tambah Event - Admin)
